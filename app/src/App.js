@@ -45,6 +45,7 @@ function App() {
           books={books}
           loadBooks={loadBooks}
           addBookDb={addBookDb}
+          deleteBook={deleteBook}
         />
         : null}
     </div>

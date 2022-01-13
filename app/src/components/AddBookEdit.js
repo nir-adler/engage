@@ -1,7 +1,24 @@
 import * as React from 'react'
 
-const AddBookEdit = ({ addBookDb, books,loadBooks }) => {
+const AddBookEdit = ({ addBookDb, books, deleteBook }) => {
     const [error, setError] = React.useState('')
+
+    const updateBook = () => {
+        const bookName = document.querySelector('#add-book-name')
+        const authorName = document.querySelector('#add-author-name')
+        const catalogNumber = document.querySelector('#add-catalog-number')
+        const publicationDate = document.querySelector('#add-publication-date')
+        const coverPhoto = document.querySelector('#add-url')
+        deleteBook(catalogNumber.value)
+        addBookDb(
+            bookName.value,
+            authorName.value,
+            catalogNumber.value,
+            publicationDate.value,
+            coverPhoto.value
+        )
+
+    }
 
     const addBook = () => {
         const bookName = document.querySelector('#add-book-name')
@@ -30,7 +47,7 @@ const AddBookEdit = ({ addBookDb, books,loadBooks }) => {
                 publicationDate.value,
                 coverPhoto.value
             )
-           
+
         }
     }
 
@@ -58,6 +75,7 @@ const AddBookEdit = ({ addBookDb, books,loadBooks }) => {
                 <p></p>
             </form>
             <button onClick={addBook}>add book</button>
+            {error == 'dup ip' ? <button onClick={updateBook}>update</button> : null}
             {error ? <p>{error}</p> : null}
         </div>
     )
