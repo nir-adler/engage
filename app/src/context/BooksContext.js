@@ -22,7 +22,10 @@ const reducer = (state, action) => {
                 })
             }
         case 'delete_book':
-            return { ...state, books: state.books.filter((book) => book.catalogNumber !== action.payload) }
+            return {
+                ...state,
+                books: state.books.filter((book) => book.catalogNumber !== action.payload)
+            }
         default:
             return state
     }
@@ -37,14 +40,11 @@ const setBookName = (dispatch) => (bookName) => {
     dispatch({ type: 'set_book', payload: bookName })
 }
 
-
-
 const deleteBook = (dispatch) => (bookId) => {
     dispatch({ type: 'delete_book', payload: bookId })
 }
 
 const updateBook = (dispatch) => (bookName, bookinfo) => {
-    console.log('aa  ', bookName, bookinfo)
     dispatch({ type: 'update_book', payload: { bookName, bookinfo } })
 }
 

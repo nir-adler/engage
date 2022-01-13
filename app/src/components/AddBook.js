@@ -4,7 +4,6 @@ const AddBook = ({ addBookDb }) => {
     const [title, setTitle] = React.useState('Enter Title')
 
     const submit = (e) => {
-        console.log('submit')
         e.preventDefault()
         addBookDb(title)
     }

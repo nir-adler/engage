@@ -20,10 +20,7 @@ const ListBooks = ({ books, setBookName, deleteBook }) => {
             {filterName === '' ?
                 books.map((book) => <div
                     key={book.bookName}
-                ><p
-                    onClick={() => setBookName(book.bookName)}
-                    
-                >
+                ><p onClick={() => setBookName(book.bookName)}>
                         {book.bookName}
                     </p>
                     <button onClick={() => deleteBook(book.catalogNumber)}>delete</button>
@@ -31,16 +28,12 @@ const ListBooks = ({ books, setBookName, deleteBook }) => {
                 :
                 books.filter((book) => book.bookName.toLowerCase().includes(filterName.toLowerCase())).map((book) => <div
                     key={book.bookName}
-                ><p
-                    onClick={() => setBookName(book.bookName)}
-                >
+                ><p onClick={() => setBookName(book.bookName)}>
                         {book.bookName}
                     </p>
                     <button onClick={() => deleteBook(book.catalogNumber)}>delete</button>
                 </div>)
             }
-
-
         </div>
     )
 }
