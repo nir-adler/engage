@@ -1,19 +1,24 @@
 import * as React from 'react'
 
-const AddBook = ({ setAddBook, addBook, setBook }) => {
+const AddBook = ({ addBookDb }) => {
+    const [title, setTitle] = React.useState('Enter Title')
 
-    const action = () => {
-        setBook(null)
-        setAddBook(!addBook)
+    const submit = (e) => {
+        console.log('submit')
+        e.preventDefault()
+        addBookDb(title)
     }
 
-    React.useEffect(() => {
-    }, [])
     return (
         <div>
-            <button onClick={action}>
-                add
-            </button>
+            <form onSubmit={submit}>
+                <input type="submit" value="add" />
+                <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+            </form>
         </div>
     )
 }

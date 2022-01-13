@@ -1,23 +1,19 @@
 import * as React from 'react'
 import './App.css'
-import { books } from './db/books'
 import Book from './components/Book'
 import ListBooks from './components/ListBooks'
 import AddBook from './components/AddBook'
-import AddBookEdit from './components/AddBookEdit'
 import { Context } from './context/BooksContext'
 
 function App() {
 
   const {
-    state: { books, bookId, addBook },
+    state: { books, bookName },
     loadBooks,
-    setAddBook,
-    setBook,
+    setBookName,
     addBookDb,
-    deleteBook } = React.useContext(Context)
-
-  console.log(addBook)
+    deleteBook,
+    updateBook } = React.useContext(Context)
 
   React.useEffect(() => {
     loadBooks()
@@ -26,28 +22,20 @@ function App() {
   return (
     <div className="App">
       <AddBook
-        setAddBook={setAddBook}
-        addBook={addBook}
-        setBook={setBook}
+        addBookDb={addBookDb}
       />
       <ListBooks
         books={books}
-        setBook={setBook}
-        
-      />
-      {bookId ? <Book
-        bookId={bookId}
-        books={books}
+        setBookName={setBookName}
         deleteBook={deleteBook}
+
+      />
+      {bookName ? <Book
+        bookName={bookName}
+        books={books}
+        updateBook={updateBook}
       /> : null}
-      {addBook ?
-        <AddBookEdit
-          books={books}
-          loadBooks={loadBooks}
-          addBookDb={addBookDb}
-          deleteBook={deleteBook}
-        />
-        : null}
+
     </div>
   );
 }

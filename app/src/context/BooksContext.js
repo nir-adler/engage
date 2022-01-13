@@ -5,80 +5,58 @@ const reducer = (state, action) => {
         case 'update_books':
             return { ...state, books: [...action.payload] }
         case 'set_book':
-            return { ...state, bookId: action.payload }
-        case 'set_add_book':
-            return { ...state, addBook: action.payload }
+            return { ...state, bookName: action.payload }
         case 'add_book':
-            return { ...state, books: [...state.books, { ...action.payload }] }
+            return {
+                ...state, books: state.books.find((book) => book.bookName == action.payload.bookName) ?
+                    [...state.books] : [...state.books, { ...action.payload }]
+            }
+        case 'update_book':
+            return {
+                ...state, books: state.books.map((book) => {
+                    if (book.bookName == action.payload.bookName) {
+                        return { ...action.payload.bookinfo, bookName: action.payload.bookName }
+                    } else {
+                        return { ...book }
+                    }
+                })
+            }
         case 'delete_book':
-            return { ...state, bookId: null, books: state.books.filter((book) => book.catalogNumber !== action.payload) }
+            return { ...state, books: state.books.filter((book) => book.catalogNumber !== action.payload) }
         default:
             return state
     }
 }
 
 const loadBooks = (dispatch) => () => {
-    try {
-        const books = require('../db/books.json')
-        console.log(books)
-        dispatch({ type: 'update_books', payload: books })
-    } catch (e) {
-
-    }
+    const books = require('../db/books.json')
+    dispatch({ type: 'update_books', payload: books })
 }
 
-const setBook = (dispatch) => (bookId) => {
-    try {
-        console.log(bookId)
-        dispatch({ type: 'set_book', payload: bookId })
-    } catch (e) {
-
-    }
+const setBookName = (dispatch) => (bookName) => {
+    dispatch({ type: 'set_book', payload: bookName })
 }
 
-const setAddBook = (dispatch) => (bool) => {
-    try {
 
-        dispatch({ type: 'set_add_book', payload: bool })
-    } catch (e) {
-
-    }
-}
 
 const deleteBook = (dispatch) => (bookId) => {
-    try {
-
-        dispatch({ type: 'delete_book', payload: bookId })
-    } catch (e) {
-
-    }
+    dispatch({ type: 'delete_book', payload: bookId })
 }
 
-const addBookDb = (dispatch) => (
-    bookName,
-    authorName,
-    catalogNumber,
-    publicationDate,
-    coverPhoto) => {
-    try {
+const updateBook = (dispatch) => (bookName, bookinfo) => {
+    console.log('aa  ', bookName, bookinfo)
+    dispatch({ type: 'update_book', payload: { bookName, bookinfo } })
+}
 
-        dispatch({
-            type: 'add_book', payload: {
-                authorName,
-                catalogNumber,
-                publicationDate,
-                coverPhoto,
-                bookName
-            }
-        })
-    } catch (e) {
-
-    }
+const addBookDb = (dispatch) => (bookName) => {
+    dispatch({
+        type: 'add_book', payload: { bookName, authorName: '', catalogNumber: '', publicationDate: '', coverPhoto: '' }
+    })
 }
 
 
 export const { Context, Provider } = createDataContext(
     reducer,
-    { loadBooks, setBook, setAddBook, addBookDb, deleteBook },
-    { books: [], bookId: null, addBook: false },
+    { loadBooks, setBookName, addBookDb, deleteBook, updateBook },
+    { books: [], bookName: null },
 )

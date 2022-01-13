@@ -1,43 +1,43 @@
 import * as React from 'react'
 
-const ListBooks = ({ books, setBook }) => {
+const ListBooks = ({ books, setBookName, deleteBook }) => {
     const [filterName, setFilterName] = React.useState('')
 
-    React.useEffect(() => {
-        const form = document.querySelector('form')
-        const input = form.querySelector('input')
-        form.addEventListener('submit', (e) => {
-            e.preventDefault()
-            console.log(input.value)
-            setFilterName(input.value)
-        })
-
-    }, [])
-
+    const submit = (e) => {
+        setFilterName(e.target.querySelector('input').value)
+        e.preventDefault()
+    }
     return (
         <div>
-            <form>
+            <form onSubmit={submit}>
                 <label>
                     book name:
                     <input type="text" name="name" />
                 </label>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="filter" />
             </form>
 
             {filterName === '' ?
-                books.map((book) => <p
-                    onClick={() => setBook(book.catalogNumber)}
-                    key={book.catalogNumber.toString()}
+                books.map((book) => <div
+                    key={book.bookName}
+                ><p
+                    onClick={() => setBookName(book.bookName)}
+                    
                 >
-                    {book.bookName}
-                </p>)
+                        {book.bookName}
+                    </p>
+                    <button onClick={() => deleteBook(book.catalogNumber)}>delete</button>
+                </div>)
                 :
-                books.filter((book) => book.bookName.toLowerCase().includes(filterName.toLowerCase())).map((book) => <p
-                    key={book.catalogNumber.toString()}
-                    onClick={() => setBook(book.catalogNumber)}
+                books.filter((book) => book.bookName.toLowerCase().includes(filterName.toLowerCase())).map((book) => <div
+                    key={book.bookName}
+                ><p
+                    onClick={() => setBookName(book.bookName)}
                 >
-                    {book.bookName}
-                </p>)
+                        {book.bookName}
+                    </p>
+                    <button onClick={() => deleteBook(book.catalogNumber)}>delete</button>
+                </div>)
             }
 
 
