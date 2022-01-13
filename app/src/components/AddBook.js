@@ -1,8 +1,9 @@
 import * as React from 'react'
 
-const AddBook = ({ setAddBook, addBook }) => {
+const AddBook = ({ setAddBook, addBook, setBook }) => {
 
     const action = () => {
+        setBook(null)
         setAddBook(!addBook)
     }
 

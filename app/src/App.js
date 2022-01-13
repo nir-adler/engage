@@ -27,6 +27,7 @@ function App() {
       <AddBook
         setAddBook={setAddBook}
         addBook={addBook}
+        setBook={setBook}
       />
       <ListBooks
         books={books}
