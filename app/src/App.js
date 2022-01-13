@@ -14,7 +14,8 @@ function App() {
     loadBooks,
     setAddBook,
     setBook,
-    addBookDb } = React.useContext(Context)
+    addBookDb,
+    deleteBook } = React.useContext(Context)
 
   console.log(addBook)
 
@@ -32,10 +33,12 @@ function App() {
       <ListBooks
         books={books}
         setBook={setBook}
+        
       />
       {bookId ? <Book
         bookId={bookId}
         books={books}
+        deleteBook={deleteBook}
       /> : null}
       {addBook ?
         <AddBookEdit

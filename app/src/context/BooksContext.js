@@ -10,6 +10,8 @@ const reducer = (state, action) => {
             return { ...state, addBook: action.payload }
         case 'add_book':
             return { ...state, books: [...state.books, { ...action.payload }] }
+        case 'delete_book':
+            return { ...state, bookId: null, books: state.books.filter((book) => book.catalogNumber !== action.payload) }
         default:
             return state
     }
@@ -43,7 +45,14 @@ const setAddBook = (dispatch) => (bool) => {
     }
 }
 
+const deleteBook = (dispatch) => (bookId) => {
+    try {
 
+        dispatch({ type: 'delete_book', payload: bookId })
+    } catch (e) {
+
+    }
+}
 
 const addBookDb = (dispatch) => (
     bookName,
@@ -70,6 +79,6 @@ const addBookDb = (dispatch) => (
 
 export const { Context, Provider } = createDataContext(
     reducer,
-    { loadBooks, setBook, setAddBook,addBookDb },
+    { loadBooks, setBook, setAddBook, addBookDb, deleteBook },
     { books: [], bookId: null, addBook: false },
 )
